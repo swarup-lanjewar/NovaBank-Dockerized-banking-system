@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: mysql:8.4
+    container_name: novabank-db
+    restart: always
+
+    env_file:
+      - .env
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    healthcheck:
+      test: ["CMD-SHELL","mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      retries: 10
+
+    networks:
+      - banknet
+
+  backend:
+
+    build: ./backend
+
+    container_name: novabank-backend
+
+    restart: always
+
+    env_file:
+      - .env
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    expose:
+      - "5000"
+
+    networks:
+      - banknet
+
+  frontend:
+
+    build: ./frontend
+
+    container_name: novabank-frontend
+
+    restart: always
+
+    depends_on:
+      - backend
+
+    ports:
+      - "80:80"
+
+    networks:
+      - banknet
+
+volumes:
+
+  mysql_data:
+
+networks:
+
+  banknet:
