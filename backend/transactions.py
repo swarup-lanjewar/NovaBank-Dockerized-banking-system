@@ -169,14 +169,15 @@ def transfer():
 
     data = request.get_json()
 
-    receiver = data.get("receiver_account")
+    receiver = str(data.get("receiver_account")).strip()
+    sender = str(g.user["account_number"]).strip()
     try:
         amount = float(data.get("amount"))
     except (TypeError, ValueError):
         return jsonify({"message": "Invalid amount"}), 400
     remarks = data.get("remarks", "Transfer")
 
-    sender = g.user["account_number"]
+    
 
     if amount <= 0:
         return jsonify({"message":"Invalid Amount"}),400
