@@ -376,6 +376,14 @@ async function loadHistory() {
 
         });
 
+        } catch {
+
+            console.log("Unable to load transactions.");
+
+        }
+
+}
+
 /* ------------------------- */
 /* LOGOUT */
 /* ------------------------- */
