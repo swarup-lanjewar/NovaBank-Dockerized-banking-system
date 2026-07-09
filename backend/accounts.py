@@ -9,7 +9,7 @@ accounts_bp = Blueprint("accounts", __name__)
 @token_required
 def get_balance():
 
-    account_number = request.user["account_number"]
+    account_number = g.user["account_number"]
 
     conn = get_connection()
 
