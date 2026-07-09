@@ -157,7 +157,7 @@ def login():
 
         token = generate_token(
             user["id"],
-            user["account_number"]
+            user["account_number"],
             user["full_name"]
 
         )
