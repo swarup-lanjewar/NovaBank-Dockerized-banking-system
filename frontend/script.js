@@ -316,15 +316,55 @@ async function loadHistory() {
 
         transactions.forEach((transaction) => {
 
+            let type = transaction.transaction_type;
+            let amount = transaction.amount;
+            let color = "green";
+
+            const myAccount = localStorage.getItem("account");
+
+            if (type === "Transfer") {
+
+                if (String(transaction.sender_account) === String(myAccount)) {
+
+                    type = `Sent to ${transaction.receiver_account}`;
+                    amount = "- ₹ " + transaction.amount;
+                    color = "red";
+
+                } else {
+
+                    type = `Received from ${transaction.sender_account}`;
+                    amount = "+ ₹ " + transaction.amount;
+                    color = "green";
+
+                }
+
+            }
+
+            else if (type === "Deposit") {
+
+                amount = "+ ₹ " + transaction.amount;
+                color = "green";
+
+            }
+
+            else if (type === "Withdraw") {
+
+                amount = "- ₹ " + transaction.amount;
+                color = "red";
+
+            }
+
             table.innerHTML += `
 
             <tr>
 
                 <td>${new Date(transaction.created_at).toLocaleString()}</td>
 
-                <td>${transaction.transaction_type}</td>
+                <td>${type}</td>
 
-                <td>₹ ${transaction.amount}</td>
+                <td style="color:${color}; font-weight:bold;">
+                    ${amount}
+                </td>
 
                 <td>${transaction.status}</td>
 
@@ -335,14 +375,6 @@ async function loadHistory() {
             `;
 
         });
-
-    } catch {
-
-        console.log("Unable to load transactions.");
-
-    }
-
-}
 
 /* ------------------------- */
 /* LOGOUT */
