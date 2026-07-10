@@ -4,8 +4,11 @@
 
 A secure **3-tier banking application** featuring **JWT authentication**, **bcrypt password hashing**, **unique account & transaction IDs**, **real-time balance updates**, and **Dockerized deployment on AWS EC2**.
 
-🎥 **Demo:** *(Add Video Link)*
+## 🎥 Demo
 
+> 📸 Since GitHub doesn't support embedded video playback in this repository, a complete visual walkthrough is available in the **Screenshots** folder.
+
+➡️ [View Screenshots](./screenshots)
 ---
 
 ## 👀 Sneak Peek
