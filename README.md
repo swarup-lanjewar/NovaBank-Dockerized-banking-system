@@ -72,7 +72,6 @@ cd NovaBank-Dockerized-Banking-System
 docker compose up --build
 ```
 
-Open **http://localhost**
 
 ---
 
